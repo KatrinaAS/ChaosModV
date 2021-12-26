@@ -18,7 +18,7 @@ using DWORD64 = unsigned long long;
 using WORD = unsigned short;
 using BYTE = unsigned char;
 
-enum class ETwitchOverlayMode;
+enum class EStreamOverlayMode;
 
 class EffectDispatcher : public Component
 {
@@ -84,8 +84,8 @@ private:
 	DWORD64 m_ullMetaTimer = 0;
 	int m_iMetaEffectTimer = 0;
 
-	bool m_bEnableTwitchVoting;
-	ETwitchOverlayMode m_eTwitchOverlayMode;
+	bool m_bEnableStreamVoting;
+	EStreamOverlayMode m_eStreamOverlayMode;
 
 public:
 	bool m_bPauseTimer = false;

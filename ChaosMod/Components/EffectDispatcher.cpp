@@ -19,9 +19,9 @@ EffectDispatcher::EffectDispatcher(const std::array<BYTE, 3>& rgTimerColor, cons
 
 	m_iMetaEffectTimer = m_usMetaEffectSpawnTime;
 
-	m_bEnableTwitchVoting = g_OptionsManager.GetTwitchValue<bool>("EnableTwitchVoting", OPTION_DEFAULT_TWITCH_VOTING_ENABLED);
+	m_bEnableStreamVoting = g_OptionsManager.GetStreamValue<bool>("EnableVoting", OPTION_DEFAULT_STREAM_VOTING_ENABLED);
 
-	m_eTwitchOverlayMode = static_cast<ETwitchOverlayMode>(g_OptionsManager.GetTwitchValue<int>("TwitchVotingOverlayMode", OPTION_DEFAULT_TWITCH_OVERLAY_MODE));
+	m_eStreamOverlayMode = static_cast<EStreamOverlayMode>(g_OptionsManager.GetStreamValue<int>("VotingOverlayMode", OPTION_DEFAULT_STREAM_OVERLAY_MODE));
 
 	Reset();
 }
@@ -240,9 +240,9 @@ void EffectDispatcher::DrawEffectTexts()
 	}
 
 	float fPosY = .2f;
-	if (m_bEnableTwitchVoting
-		&& (m_eTwitchOverlayMode == ETwitchOverlayMode::OverlayIngame
-			|| m_eTwitchOverlayMode == ETwitchOverlayMode::OverlayOBS))
+	if (m_bEnableStreamVoting
+		&& (m_eStreamOverlayMode == EStreamOverlayMode::OverlayIngame
+			|| m_eStreamOverlayMode == EStreamOverlayMode::OverlayOBS))
 	{
 		fPosY = .35f;
 	}

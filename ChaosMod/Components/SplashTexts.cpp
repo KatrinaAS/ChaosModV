@@ -17,11 +17,11 @@ void SplashTexts::Run()
 		m_fStartupSplashTime -= fFrameTime;
 	}
 
-	if (m_fTwitchVotingSplashTime > 0)
+	if (m_fStreamVotingSplashTime > 0)
 	{
-		DrawScreenText("Twitch Voting Enabled!", { .86f, .7f }, .8f, { 255, 100, 100 }, true);
+		DrawScreenText("Stream Voting Enabled!", { .86f, .7f }, .8f, { 255, 100, 100 }, true);
 
-		m_fTwitchVotingSplashTime -= fFrameTime;
+		m_fStreamVotingSplashTime -= fFrameTime;
 	}
 
 	if (m_fClearEffectsSplashTime > 0)
@@ -37,9 +37,9 @@ void SplashTexts::ShowInitSplash()
 	m_fStartupSplashTime = SPLASH_TEXT_DUR_SECS;
 }
 
-void SplashTexts::ShowTwitchVotingSplash()
+void SplashTexts::ShowStreamVotingSplash()
 {
-	m_fTwitchVotingSplashTime = SPLASH_TEXT_DUR_SECS;
+	m_fStreamVotingSplashTime = SPLASH_TEXT_DUR_SECS;
 }
 
 void SplashTexts::ShowClearEffectsSplash()

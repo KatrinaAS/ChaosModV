@@ -13,14 +13,14 @@ using BYTE = unsigned char;
 
 using HANDLE = void*;
 
-enum class ETwitchOverlayMode : int
+enum class EStreamOverlayMode : int
 {
 	ChatMessages,
 	OverlayIngame,
 	OverlayOBS
 };
 
-class TwitchVoting : public Component
+class StreamVoting : public Component
 {
 private:
 	struct ChoosableEffect
@@ -37,15 +37,15 @@ private:
 		int m_iChanceVotes = 0;
 	};
 
-	bool m_bEnableTwitchVoting;
+	bool m_bEnableVoting;
 
 	bool m_bReceivedHello = false;
 	bool m_bReceivedFirstPing = false;
 	bool m_bHasReceivedResult = false;
 
-	int m_iTwitchSecsBeforeVoting;
+	int m_iStreamSecsBeforeVoting;
 
-	bool m_bEnableTwitchPollVoting = false;
+	bool m_bEnableStreamPollVoting = false;
 
 	HANDLE m_hPipeHandle = INVALID_HANDLE_VALUE;
 
@@ -58,11 +58,11 @@ private:
 	bool m_bNoVoteRound = false;
 	bool m_bAlternatedVotingRound = false;
 
-	ETwitchOverlayMode m_eTwitchOverlayMode;
+	EStreamOverlayMode m_eStreamOverlayMode;
 
-	bool m_bEnableTwitchChanceSystem;
+	bool m_bEnableStreamChanceSystem;
 	bool m_bEnableVotingChanceSystemRetainChance;
-	bool m_bEnableTwitchRandomEffectVoteable;
+	bool m_bEnableStreamRandomEffectVoteable;
 	
 	std::array<BYTE, 3> m_rgTextColor;
 
@@ -73,8 +73,8 @@ private:
 	std::unique_ptr<EffectIdentifier> m_pChosenEffectIdentifier;
 
 public:
-	TwitchVoting(const std::array<BYTE, 3>& rgTextColor);
-	~TwitchVoting();
+	StreamVoting(const std::array<BYTE, 3>& rgTextColor);
+	~StreamVoting();
 
 	virtual void Run() override;
 

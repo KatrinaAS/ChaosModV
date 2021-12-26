@@ -3,7 +3,7 @@
 #include "Main.h"
 
 static std::unique_ptr<DebugMenu> ms_pDebugMenu;
-static std::unique_ptr<TwitchVoting> ms_pTwitchVoting;
+static std::unique_ptr<StreamVoting> ms_pStreamVoting;
 static std::unique_ptr<Failsafe> ms_pFailsafe;
 static std::unique_ptr<SplashTexts> ms_pSplashTexts;
 
@@ -53,7 +53,7 @@ static void Reset()
 
 	ms_pDebugMenu.reset();
 
-	ms_pTwitchVoting.reset();
+	ms_pStreamVoting.reset();
 
 	ms_pFailsafe.reset();
 
@@ -128,17 +128,17 @@ static void Init()
 
 	ms_pDebugMenu = std::make_unique<DebugMenu>();
 
-	LOG("Initializing Twitch voting");
-	ms_pTwitchVoting = std::make_unique<TwitchVoting>(rgTextColor);
+	LOG("Initializing Stream voting");
+	ms_pStreamVoting = std::make_unique<StreamVoting>(rgTextColor);
 
 	LOG("Initializing Failsafe");
 	ms_pFailsafe = std::make_unique<Failsafe>();
 
 	LOG("Completed Init!");
 
-	if (ms_pTwitchVoting->IsEnabled())
+	if (ms_pStreamVoting->IsEnabled())
 	{
-		ms_pSplashTexts->ShowTwitchVotingSplash();
+		ms_pSplashTexts->ShowStreamVotingSplash();
 	}
 }
 

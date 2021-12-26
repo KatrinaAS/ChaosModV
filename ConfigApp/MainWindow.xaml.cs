@@ -17,7 +17,7 @@ namespace ConfigApp
         private bool m_initializedTitle = false;
 
         private OptionsFile m_configFile = new OptionsFile("config.ini");
-        private OptionsFile m_twitchFile = new OptionsFile("twitch.ini");
+        private OptionsFile m_streamFile = new OptionsFile("voting.ini");
         private OptionsFile m_effectsFile = new OptionsFile("effects.ini");
 
         private Dictionary<EffectType, TreeMenuItem> m_treeMenuItemsMap;
@@ -32,13 +32,16 @@ namespace ConfigApp
         {
             InitializeComponent();
 
-            twitch_user_overlay_mode.ItemsSource = new string[]
+            stream_user_overlay_mode.ItemsSource = new string[]
             {
                 "Chat Messages",
                 "In-Game Overlay",
                 "OBS Overlay"
             };
-
+            stream_type.ItemsSource = new string[]
+            {
+                "Twitch",
+            };
             if (!m_initializedTitle)
             {
                 m_initializedTitle = true;
@@ -49,13 +52,13 @@ namespace ConfigApp
             CheckForUpdates();
 
             ParseConfigFile();
-            ParseTwitchFile();
+            ParseStreamFile();
 
             InitEffectsTreeView();
 
             ParseEffectsFile();
 
-            InitTwitchTab();
+            InitStreamTab();
 
             // Check write permissions
             try
@@ -179,34 +182,36 @@ namespace ConfigApp
             m_configFile.WriteFile();
         }
 
-        private void ParseTwitchFile()
+        private void ParseStreamFile()
         {
-            m_twitchFile.ReadFile();
+            m_streamFile.ReadFile();
 
-            twitch_user_agreed.IsChecked = m_twitchFile.ReadValueBool("EnableTwitchVoting", false);
-            twitch_user_channel_name.Text = m_twitchFile.ReadValue("TwitchChannelName");
-            twitch_user_user_name.Text = m_twitchFile.ReadValue("TwitchUserName");
-            twitch_user_channel_oauth.Password = m_twitchFile.ReadValue("TwitchChannelOAuth");
-            twitch_user_effects_secs_before_chat_voting.Text = m_twitchFile.ReadValue("TwitchVotingSecsBeforeVoting", "0");
-            twitch_user_overlay_mode.SelectedIndex = m_twitchFile.ReadValueInt("TwitchVotingOverlayMode", 0);
-            twitch_user_chance_system_enable.IsChecked = m_twitchFile.ReadValueBool("TwitchVotingChanceSystem", false);
-            twitch_user_chance_system_retain_chance_enable.IsChecked = m_twitchFile.ReadValueBool("TwitchVotingChanceSystemRetainChance", true);
-            twitch_user_random_voteable_enable.IsChecked = m_twitchFile.ReadValueBool("TwitchRandomEffectVoteableEnable", true);
+            stream_user_agreed.IsChecked = m_streamFile.ReadValueBool("EnableVoting", false);
+            stream_user_channel_name.Text = m_streamFile.ReadValue("ChannelID");
+            stream_user_user_name.Text = m_streamFile.ReadValue("UserName");
+            stream_user_channel_oauth.Password = m_streamFile.ReadValue("ChannelOAuth");
+            stream_user_effects_secs_before_chat_voting.Text = m_streamFile.ReadValue("SecsBeforeVoting", "0");
+            stream_user_overlay_mode.SelectedIndex = m_streamFile.ReadValueInt("VotingOverlayMode", 0);
+            stream_type.SelectedIndex = m_streamFile.ReadValueInt("ChannelType", 0);
+            stream_user_chance_system_enable.IsChecked = m_streamFile.ReadValueBool("VotingChanceSystem", false);
+            stream_user_chance_system_retain_chance_enable.IsChecked = m_streamFile.ReadValueBool("ChanceSystemRetainChance", true);
+            stream_user_random_voteable_enable.IsChecked = m_streamFile.ReadValueBool("RandomEffectVoteableEnable", true);
         }
 
-        private void WriteTwitchFile()
+        private void WriteStreamFile()
         {
-            m_twitchFile.WriteValue("EnableTwitchVoting", twitch_user_agreed.IsChecked.Value);
-            m_twitchFile.WriteValue("TwitchChannelName", twitch_user_channel_name.Text);
-            m_twitchFile.WriteValue("TwitchUserName", twitch_user_user_name.Text);
-            m_twitchFile.WriteValue("TwitchChannelOAuth", twitch_user_channel_oauth.Password);
-            m_twitchFile.WriteValue("TwitchVotingSecsBeforeVoting", twitch_user_effects_secs_before_chat_voting.Text);
-            m_twitchFile.WriteValue("TwitchVotingOverlayMode", twitch_user_overlay_mode.SelectedIndex);
-            m_twitchFile.WriteValue("TwitchVotingChanceSystem", twitch_user_chance_system_enable.IsChecked.Value);
-            m_twitchFile.WriteValue("TwitchVotingChanceSystemRetainChance", twitch_user_chance_system_retain_chance_enable.IsChecked.Value);
-            m_twitchFile.WriteValue("TwitchRandomEffectVoteableEnable", twitch_user_random_voteable_enable.IsChecked.Value);
+            m_streamFile.WriteValue("EnableVoting", stream_user_agreed.IsChecked.Value);
+            m_streamFile.WriteValue("ChannelID", stream_user_channel_name.Text);
+            m_streamFile.WriteValue("UserName", stream_user_user_name.Text);
+            m_streamFile.WriteValue("ChannelOAuth", stream_user_channel_oauth.Password);
+            m_streamFile.WriteValue("SecsBeforeVoting", stream_user_effects_secs_before_chat_voting.Text);
+            m_streamFile.WriteValue("VotingOverlayMode", stream_user_overlay_mode.SelectedIndex);
+            m_streamFile.WriteValue("ChannelType", stream_type.SelectedIndex);
+            m_streamFile.WriteValue("VotingChanceSystem", stream_user_chance_system_enable.IsChecked.Value);
+            m_streamFile.WriteValue("ChanceSystemRetainChance", stream_user_chance_system_retain_chance_enable.IsChecked.Value);
+            m_streamFile.WriteValue("RandomEffectVoteableEnable", stream_user_random_voteable_enable.IsChecked.Value);
 
-            m_twitchFile.WriteFile();
+            m_streamFile.WriteFile();
         }
 
         private void ParseEffectsFile()
@@ -361,31 +366,31 @@ namespace ConfigApp
             
         }
 
-        void InitTwitchTab()
+        void InitStreamTab()
         {
-            TwitchTabHandleAgreed();
+            StreamTabHandleAgreed();
         }
 
-        void TwitchTabHandleAgreed()
+        void StreamTabHandleAgreed()
         {
-            bool agreed = twitch_user_agreed.IsChecked.GetValueOrDefault();
+            bool agreed = stream_user_agreed.IsChecked.GetValueOrDefault();
 
-            twitch_user_channel_name_label.IsEnabled = agreed;
-            twitch_user_channel_name.IsEnabled = agreed;
-            twitch_user_channel_oauth_label.IsEnabled = agreed;
-            twitch_user_channel_oauth.IsEnabled = agreed;
-            twitch_user_user_name_label.IsEnabled = agreed;
-            twitch_user_user_name.IsEnabled = agreed;
-            twitch_user_effects_secs_before_chat_voting_label.IsEnabled = agreed;
-            twitch_user_effects_secs_before_chat_voting.IsEnabled = agreed;
-            twitch_user_overlay_mode_label.IsEnabled = agreed;
-            twitch_user_overlay_mode.IsEnabled = agreed;
-            twitch_user_chance_system_enable_label.IsEnabled = agreed;
-            twitch_user_chance_system_enable.IsEnabled = agreed;
-            twitch_user_chance_system_retain_chance_enable_label.IsEnabled = agreed;
-            twitch_user_chance_system_retain_chance_enable.IsEnabled = agreed;
-            twitch_user_random_voteable_enable.IsEnabled = agreed;
-            twitch_user_random_voteable_enable_label.IsEnabled = agreed;
+            stream_user_channel_name_label.IsEnabled = agreed;
+            stream_user_channel_name.IsEnabled = agreed;
+            stream_user_channel_oauth_label.IsEnabled = agreed;
+            stream_user_channel_oauth.IsEnabled = agreed;
+            stream_user_user_name_label.IsEnabled = agreed;
+            stream_user_user_name.IsEnabled = agreed;
+            stream_user_effects_secs_before_chat_voting_label.IsEnabled = agreed;
+            stream_user_effects_secs_before_chat_voting.IsEnabled = agreed;
+            stream_user_overlay_mode_label.IsEnabled = agreed;
+            stream_user_overlay_mode.IsEnabled = agreed;
+            stream_user_chance_system_enable_label.IsEnabled = agreed;
+            stream_user_chance_system_enable.IsEnabled = agreed;
+            stream_user_chance_system_retain_chance_enable_label.IsEnabled = agreed;
+            stream_user_chance_system_retain_chance_enable.IsEnabled = agreed;
+            stream_user_random_voteable_enable.IsEnabled = agreed;
+            stream_user_random_voteable_enable_label.IsEnabled = agreed;
         }
 
         private void OnlyNumbersPreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -406,12 +411,12 @@ namespace ConfigApp
         private void user_save_Click(object sender, RoutedEventArgs e)
         {
             WriteConfigFile();
-            WriteTwitchFile();
+            WriteStreamFile();
             WriteEffectsFile();
 
             // Reload saved config to show the "new" (saved) settings
             ParseConfigFile();
-            ParseTwitchFile();
+            ParseStreamFile();
 
             MessageBox.Show("Saved config!\nMake sure to press CTRL + L in-game twice if mod is already running to reload the config.", "ChaosModV", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -427,16 +432,16 @@ namespace ConfigApp
 
                 m_effectsFile.ResetFile();
 
-                result = MessageBox.Show("Do you want to reset your Twitch settings too?", "ChaosModV",
+                result = MessageBox.Show("Do you want to reset your Stream settings too?", "ChaosModV",
                     MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    m_twitchFile.ResetFile();
-                    ParseTwitchFile();
+                    m_streamFile.ResetFile();
+                    ParseStreamFile();
 
-                    // Ensure all options are disabled in twitch tab again
-                    TwitchTabHandleAgreed();
+                    // Ensure all options are disabled in streaming tab again
+                    StreamTabHandleAgreed();
                 }
 
                 Init();
@@ -445,9 +450,9 @@ namespace ConfigApp
             }
         }
 
-        private void twitch_user_agreed_Clicked(object sender, RoutedEventArgs e)
+        private void stream_user_agreed_Clicked(object sender, RoutedEventArgs e)
         {
-            TwitchTabHandleAgreed();
+            StreamTabHandleAgreed();
         }
 
         private void effect_user_config_Click(object sender, RoutedEventArgs e)

@@ -8,13 +8,13 @@ class SplashTexts : public Component
 {
 private:
 	float m_fStartupSplashTime = 0.f;
-	float m_fTwitchVotingSplashTime = 0.f;
+	float m_fStreamVotingSplashTime = 0.f;
 	float m_fClearEffectsSplashTime = 0.f;
 
 public:
 	virtual void Run() override;
 
 	void ShowInitSplash();
-	void ShowTwitchVotingSplash();
+	void ShowStreamVotingSplash();
 	void ShowClearEffectsSplash();
 };

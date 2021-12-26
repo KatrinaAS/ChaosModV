@@ -23,7 +23,7 @@ namespace VotingProxy.ChaosPipe
         private ILogger logger = Log.Logger.ForContext<ChaosPipeClient>();
         private NamedPipeClientStream pipe = new NamedPipeClientStream(
             ".",
-            "ChaosModVTwitchChatPipe",
+            "ChaosModVChatPipe",
             PipeDirection.InOut,
             PipeOptions.Asynchronous);
         private StreamReader pipeReader;
