@@ -56,7 +56,7 @@
                HorizontalAlignment="Right" VerticalAlignment="Center" />
         <ComboBox x:Name="effectconf_effect_weight_mult" Height="25" Width="45" Grid.Row="4" Grid.Column="2"
                   HorizontalAlignment="Left" VerticalAlignment="Center" />
-        <Label x:Name="effectconf_exclude_voting_enable_title" Content="Exclude Effect from Voting (Twitch)" Grid.Row="5" Grid.Column="0"
+        <Label x:Name="effectconf_exclude_voting_enable_title" Content="Exclude Effect from Voting (Chat)" Grid.Row="5" Grid.Column="0"
                HorizontalAlignment="Right" VerticalAlignment="Center" />
         <CheckBox x:Name="effectconf_exclude_voting_enable" Grid.Row="5" Grid.Column="2"
                   HorizontalAlignment="Left" VerticalAlignment="Center"

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TwitchChatVotingProxy.VotingReceiver
+namespace ChatVotingProxy.VotingReceiver
 {
     /// <summary>
     /// Defines the interface that a voting receiver needs to satisfy

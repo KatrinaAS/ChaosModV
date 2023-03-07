@@ -1,4 +1,4 @@
-﻿namespace TwitchChatVotingProxy.VotingReceiver
+﻿namespace ChatVotingProxy.VotingReceiver
 {
     /// <summary>
     /// Event which should be dispatched when the voting receiver receives

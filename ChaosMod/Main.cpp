@@ -16,7 +16,7 @@
 #include "Components/Failsafe.h"
 #include "Components/Shortcuts.h"
 #include "Components/SplashTexts.h"
-#include "Components/TwitchVoting.h"
+#include "Components/ChatVoting.h"
 
 #include "Util/File.h"
 #include "Util/OptionsManager.h"
@@ -174,8 +174,8 @@ static void Init()
 	LOG("Initializing shortcuts");
 	InitComponent<Shortcuts>();
 
-	LOG("Initializing Twitch voting");
-	InitComponent<TwitchVoting>(rgTextColor);
+	LOG("Initializing Chat voting");
+	InitComponent<ChatVoting>(rgTextColor);
 
 	LOG("Initializing Failsafe");
 	InitComponent<Failsafe>();
@@ -190,9 +190,9 @@ static void Init()
 
 	LOG("Completed init");
 
-	if (ComponentExists<TwitchVoting>() && GetComponent<TwitchVoting>()->IsEnabled() && ComponentExists<SplashTexts>())
+	if (ComponentExists<ChatVoting>() && GetComponent<ChatVoting>()->IsEnabled() && ComponentExists<SplashTexts>())
 	{
-		GetComponent<SplashTexts>()->ShowTwitchVotingSplash();
+		GetComponent<SplashTexts>()->ShowChatVotingSplash();
 	}
 }
 

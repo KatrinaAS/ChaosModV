@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchChatVotingProxy.OverlayServer
+namespace ChatVotingProxy.OverlayServer
 {
     /// <summary>
     /// Config for the default implementation of the overlay server

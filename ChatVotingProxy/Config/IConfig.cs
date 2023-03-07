@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchChatVotingProxy.Config
+namespace ChatVotingProxy.Config
 {
     interface IConfig
     {
@@ -15,6 +15,7 @@ namespace TwitchChatVotingProxy.Config
         string TwitchChannelName { get; set; }
         string TwitchOAuth { get; set; }
         string TwitchUserName { get; set; }
-        public string[] PermittedTwitchUsernames { get; set; }
+        public string[] PermittedChatUsernames { get; set; }
+        EChatType? ChatType { get; set; }
     }
 }

@@ -1,13 +1,14 @@
 ﻿using Serilog;
 using System;
 using System.Threading;
-using TwitchChatVotingProxy.ChaosPipe;
-using TwitchChatVotingProxy.OverlayServer;
-using TwitchChatVotingProxy.VotingReceiver;
+using ChatVotingProxy.ChaosPipe;
+using ChatVotingProxy.OverlayServer;
+using ChatVotingProxy.VotingReceiver;
+using System.IO;
 
-namespace TwitchChatVotingProxy
+namespace ChatVotingProxy
 {
-    class TwitchChatVotingProxy
+    class ChatVotingProxy
     {
         private static ILogger logger;
 
@@ -27,14 +28,14 @@ namespace TwitchChatVotingProxy
                .MinimumLevel.Debug()
                .WriteTo.File("./chaosmod/chaosProxy.log", outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] [{SourceContext:l}] {Message:lj}{NewLine}{Exception}")
                .CreateLogger();
-            logger = Log.Logger.ForContext<TwitchChatVotingProxy>();
+            logger = Log.Logger.ForContext<ChatVotingProxy>();
 
             logger.Information("===============================");
-            logger.Information("Starting chaos mod twitch proxy");
+            logger.Information("Starting chaos mod chat proxy");
             logger.Information("===============================");
             
             // Read big config file WIP
-            var config = new Config.Config("./chaosmod/twitch.ini");
+            var config = new Config.Config("./chaosmod/chat.ini");
 
             // Validate voting mode
             EVotingMode votingMode;
@@ -50,17 +51,7 @@ namespace TwitchChatVotingProxy
 
             try
             {
-                // Create twitch config
-                TwitchVotingReceiverConfig twitchVotingReceiverConfig;
-                try
-                {
-                    twitchVotingReceiverConfig = new TwitchVotingReceiverConfig(config.TwitchChannelName, config.TwitchOAuth, config.TwitchUserName);
-                }
-                catch (Exception e)
-                {
-                    logger.Fatal(e, "failed to create twitch voting receiver config");
-                    return;
-                }
+               
 
                 // Check if OBS overlay should be shown
                 OverlayServer.OverlayServer overlayServer = null;
@@ -72,13 +63,36 @@ namespace TwitchChatVotingProxy
                     // Create component
                     overlayServer = new OverlayServer.OverlayServer(overlayServerConfig);
                 }
+                IVotingReceiver receiver = null;
+                switch (config.ChatType)
+                {
+                    default:
+                    case EChatType.TWITCH:
+                        // Create twitch config
+                        TwitchVotingReceiverConfig twitchVotingReceiverConfig;
+                        try
+                        {
+                            twitchVotingReceiverConfig = new TwitchVotingReceiverConfig(config.TwitchChannelName, config.TwitchOAuth, config.TwitchUserName);
+                        }
+                        catch (Exception e)
+                        {
+                            logger.Fatal(e, "failed to create chat voting receiver config");
+                            return;
+                        }
+                        receiver= new TwitchVotingReceiver(twitchVotingReceiverConfig);
+                        break;
+                    case null:
+                        throw new ArgumentOutOfRangeException();
+                    
+                        
+                }
+                
 
                 // Create components
-                var votingReceiver = new TwitchVotingReceiver(twitchVotingReceiverConfig);
                 var chaosPipe = new ChaosPipeClient();
 
                 // Start the chaos mod controller
-                new ChaosModController(chaosPipe, overlayServer, votingReceiver, config);
+                new ChaosModController(chaosPipe, overlayServer, receiver, config);
 
                 while (chaosPipe.IsConnected()) 
                 {

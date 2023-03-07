@@ -43,9 +43,9 @@ void SplashTexts::ShowInitSplash()
 #endif
 }
 
-void SplashTexts::ShowTwitchVotingSplash()
+void SplashTexts::ShowChatVotingSplash()
 {
-	ShowSplash("Twitch Voting Enabled!", { .86f, .7f }, .8f, { 255, 100, 100 });
+	ShowSplash("Chat Voting Enabled!", { .86f, .7f }, .8f, { 255, 100, 100 });
 }
 
 void SplashTexts::ShowClearEffectsSplash()

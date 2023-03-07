@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4765F6E3-B78C-4B76-BA30-AA5362862818}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TwitchChatVotingProxy</RootNamespace>
-    <AssemblyName>TwitchChatVotingProxy</AssemblyName>
+    <RootNamespace>ChatVotingProxy</RootNamespace>
+    <AssemblyName>ChatVotingProxy</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <LangVersion>8.0</LangVersion>
     <FileAlignment>512</FileAlignment>
@@ -253,6 +253,7 @@
     <Compile Include="ChaosPipe\OnNewVoteArgs.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\IConfig.cs" />
+    <Compile Include="EChatType.cs" />
     <Compile Include="EOverlayMode.cs" />
     <Compile Include="EVotingMode.cs" />
     <Compile Include="OverlayServer\OverlayServerConfig.cs" />
@@ -263,7 +264,7 @@
     <Compile Include="TwitchVotingReceiverConfig.cs" />
     <Compile Include="VoteOption.cs" />
     <Compile Include="IVoteOption.cs" />
-    <Compile Include="TwitchChatVotingProxy.cs" />
+    <Compile Include="ChatVotingProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VotingReceiver\IVotingReceiver.cs" />
     <Compile Include="VotingReceiver\OnMessageArgs.cs" />

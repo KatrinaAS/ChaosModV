@@ -3,7 +3,7 @@
 #include "EffectDispatcher.h"
 #include "Mp3Manager.h"
 
-#include "Components/TwitchVoting.h"
+#include "Components/ChatVoting.h"
 
 #include "Effects/EEffectCategory.h"
 #include "Effects/MetaModifiers.h"
@@ -225,11 +225,11 @@ EffectDispatcher::EffectDispatcher(const std::array<BYTE, 3> &rgTimerColor, cons
 	m_iMaxRunningEffects =
 	    g_OptionsManager.GetConfigValue<int>("MaxParallelRunningEffects", OPTION_DEFAULT_MAX_RUNNING_PARALLEL_EFFECTS);
 
-	m_bEnableTwitchVoting =
-	    g_OptionsManager.GetTwitchValue<bool>("EnableTwitchVoting", OPTION_DEFAULT_TWITCH_VOTING_ENABLED);
+	m_bEnableChatVoting =
+	    g_OptionsManager.GetChatVoteValue<bool>("EnableChatVoting", OPTION_DEFAULT_CHAT_VOTING_ENABLED);
 
-	m_eTwitchOverlayMode = static_cast<ETwitchOverlayMode>(
-	    g_OptionsManager.GetTwitchValue<int>("TwitchVotingOverlayMode", OPTION_DEFAULT_TWITCH_OVERLAY_MODE));
+	m_eChatOverlayMode = static_cast<EChatVoteOverlayMode>(
+	    g_OptionsManager.GetChatVoteValue<int>("VotingOverlayMode", OPTION_DEFAULT_CHAT_OVERLAY_MODE));
 
 	Reset();
 
@@ -717,9 +717,9 @@ void EffectDispatcher::ResetTimer()
 
 float EffectDispatcher::GetEffectTopSpace()
 {
-	if (m_bEnableTwitchVoting
-	    && (m_eTwitchOverlayMode == ETwitchOverlayMode::OverlayIngame
-	        || m_eTwitchOverlayMode == ETwitchOverlayMode::OverlayOBS))
+	if (m_bEnableChatVoting
+	    && (m_eChatOverlayMode == EChatVoteOverlayMode::OverlayIngame
+	        || m_eChatOverlayMode == EChatVoteOverlayMode::OverlayOBS))
 	{
 		return m_fEffectsTopSpacingWithVoting;
 	}

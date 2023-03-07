@@ -11,14 +11,14 @@ using BYTE    = unsigned char;
 
 using HANDLE  = void *;
 
-enum class ETwitchOverlayMode : int
+enum class EChatVoteOverlayMode : int
 {
 	ChatMessages,
 	OverlayIngame,
 	OverlayOBS
 };
 
-class TwitchVoting : public Component
+class ChatVoting : public Component
 {
   private:
 	struct ChoosableEffect
@@ -34,13 +34,13 @@ class TwitchVoting : public Component
 		int m_iChanceVotes = 0;
 	};
 
-	bool m_bEnableTwitchVoting;
+	bool m_bEnableChatVoting;
 
 	bool m_bReceivedHello     = false;
 	bool m_bReceivedFirstPing = false;
 	bool m_bHasReceivedResult = false;
 
-	int m_iTwitchSecsBeforeVoting;
+	int m_iChatSecsBeforeVoting;
 
 	HANDLE m_hPipeHandle            = INVALID_HANDLE_VALUE;
 
@@ -52,11 +52,11 @@ class TwitchVoting : public Component
 	bool m_bIsVotingRoundDone       = true;
 	bool m_bAlternatedVotingRound   = false;
 
-	ETwitchOverlayMode m_eTwitchOverlayMode;
+	EChatVoteOverlayMode m_eChatOverlayMode;
 
-	bool m_bEnableTwitchChanceSystem;
+	bool m_bEnableChatChanceSystem;
 	bool m_bEnableVotingChanceSystemRetainChance;
-	bool m_bEnableTwitchRandomEffectVoteable;
+	bool m_bEnableChatRandomEffectVoteable;
 
 	std::array<BYTE, 3> m_rgTextColor;
 
@@ -68,8 +68,8 @@ class TwitchVoting : public Component
 	std::string GetPipeJson(std::string identifier, std::vector<std::string> params);
 
   protected:
-	TwitchVoting(const std::array<BYTE, 3> &rgTextColor);
-	virtual ~TwitchVoting() override;
+	ChatVoting(const std::array<BYTE, 3> &rgTextColor);
+	virtual ~ChatVoting() override;
 
   public:
 	virtual void OnModPauseCleanup() override;

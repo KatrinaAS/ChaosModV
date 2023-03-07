@@ -19,7 +19,7 @@ using DWORD64 = unsigned long long;
 using WORD    = unsigned short;
 using BYTE    = unsigned char;
 
-enum class ETwitchOverlayMode;
+enum class EChatVoteOverlayMode;
 
 class EffectDispatcher : public Component
 {
@@ -92,8 +92,8 @@ class EffectDispatcher : public Component
 	bool m_bMetaEffectsEnabled         = true;
 	float m_fMetaEffectTimerPercentage = 0.f;
 
-	bool m_bEnableTwitchVoting;
-	ETwitchOverlayMode m_eTwitchOverlayMode;
+	bool m_bEnableChatVoting;
+	EChatVoteOverlayMode m_eChatOverlayMode;
 
 	enum class ClearEffectsState
 	{

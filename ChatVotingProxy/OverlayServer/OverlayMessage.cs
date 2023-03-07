@@ -1,4 +1,4 @@
-﻿namespace TwitchChatVotingProxy.OverlayServer
+﻿namespace ChatVotingProxy.OverlayServer
 {
     /// <summary>
     /// Message which is being sent 

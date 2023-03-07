@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using TwitchChatVotingProxy.ChaosPipe;
-using TwitchChatVotingProxy.Config;
-using TwitchChatVotingProxy.OverlayServer;
-using TwitchChatVotingProxy.VotingReceiver;
+using ChatVotingProxy.ChaosPipe;
+using ChatVotingProxy.Config;
+using ChatVotingProxy.OverlayServer;
+using ChatVotingProxy.VotingReceiver;
 
-namespace TwitchChatVotingProxy
+namespace ChatVotingProxy
 {
     class ChaosModController
     {
@@ -52,7 +52,7 @@ namespace TwitchChatVotingProxy
             votingMode = config.VotingMode;
             overlayMode = config.OverlayMode;
             retainInitialVotes = config.RetainInitalVotes;
-            permittedUsernames = config.PermittedTwitchUsernames;
+            permittedUsernames = config.PermittedChatUsernames;
 
             // Setup display update tick
             displayUpdateTick.Elapsed += DisplayUpdateTick;

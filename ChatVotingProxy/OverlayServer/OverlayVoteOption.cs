@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchChatVotingProxy.OverlayServer
+namespace ChatVotingProxy.OverlayServer
 {
     /// <summary>
     /// Represents how the vote options are being sent to the client after

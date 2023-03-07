@@ -34,7 +34,7 @@ class SplashTexts : public Component
 	void ShowSplash(const std::string &szText, const ScreenTextVector &textPos, float fScale, ScreenTextColor textColor,
 	                float fTime);
 	void ShowInitSplash();
-	void ShowTwitchVotingSplash();
+	void ShowChatVotingSplash();
 	void ShowClearEffectsSplash();
 
 	template <class T>

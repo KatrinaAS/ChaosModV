@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwitchChatVotingProxy
+namespace ChatVotingProxy
 {
     /// <summary>
     /// Config object for the twitch implementation of the voting receiver

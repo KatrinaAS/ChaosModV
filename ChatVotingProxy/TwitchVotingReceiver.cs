@@ -7,7 +7,7 @@ using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Events;
 
-namespace TwitchChatVotingProxy.VotingReceiver
+namespace ChatVotingProxy.VotingReceiver
 {
     /// <summary>
     /// Twitch voting receiver implementation

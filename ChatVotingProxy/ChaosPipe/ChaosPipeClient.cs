@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace TwitchChatVotingProxy.ChaosPipe
+namespace ChatVotingProxy.ChaosPipe
 {
     class ChaosPipeClient : IChaosPipeClient
     {
@@ -25,7 +25,7 @@ namespace TwitchChatVotingProxy.ChaosPipe
         private ILogger logger = Log.Logger.ForContext<ChaosPipeClient>();
         private NamedPipeClientStream pipe = new NamedPipeClientStream(
             ".",
-            "ChaosModVTwitchChatPipe",
+            "ChaosModVChatPipe",
             PipeDirection.InOut,
             PipeOptions.Asynchronous);
         private StreamReader pipeReader;
