@@ -55,6 +55,13 @@ namespace TwitchChatVotingProxy
         private void DisplayUpdateTick(object? sender, ElapsedEventArgs e)
         {
             m_OverlayServer?.UpdateVoting(m_ActiveVoteOptions);
+            foreach(var votingReceiver in m_VotingReceivers)
+            {
+                if(votingReceiver.IsDataBased())
+                {
+                    votingReceiver.UpdateVoting(m_ActiveVoteOptions);
+                }
+            }
         }
         /// <summary>
         /// Calculate the voting result by counting them, and returning the one
@@ -120,6 +127,14 @@ namespace TwitchChatVotingProxy
             try
             {
                 m_OverlayServer?.EndVoting();
+                foreach (var votingReceiver in m_VotingReceivers)
+                {
+                    if (votingReceiver.IsDataBased())
+                    {
+                        votingReceiver.EndVoting();
+                    }
+                }
+
 
             }
             catch (Exception err)
@@ -187,13 +202,25 @@ namespace TwitchChatVotingProxy
 
                     foreach (var votingReceiver in m_VotingReceivers)
                     {
-                        await votingReceiver.SendMessage(msg);
+                        if (!votingReceiver.IsDataBased())
+                        {
+                            await votingReceiver.SendMessage(msg);
+                        }
+
                     }
 
                     break;
                 case EOverlayMode.OVERLAY_OBS:
                     m_OverlayServer?.NewVoting(m_ActiveVoteOptions);
                     break;
+                
+            }
+            foreach (var votingReceiver in m_VotingReceivers)
+            {
+                if (votingReceiver.IsDataBased())
+                {
+                    await votingReceiver.SendData(m_ActiveVoteOptions, m_Config.VotingMode == EVotingMode.PERCENTAGE);
+                }
             }
             // Clear the old voted for information
             m_UserVotedFor.Clear();
@@ -209,6 +236,13 @@ namespace TwitchChatVotingProxy
         private void OnNoVotingRound(object? sender, EventArgs e)
         {
             m_OverlayServer?.NoVotingRound();
+            foreach (var votingReceiver in m_VotingReceivers)
+            {
+                if (votingReceiver.IsDataBased())
+                {
+                    votingReceiver.NoVotingRound();
+                }
+            }
         }
         /// <summary>
         /// Is called when the voting receiver receives a message

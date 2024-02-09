@@ -64,6 +64,10 @@ namespace TwitchChatVotingProxy
             {
                 votingReceivers.Add(("Discord", new DiscordVotingReceiver(config, chaosPipe)));
             }
+            if(config.ReadValueBool("EnableVotingWebsite", false))
+            {
+                votingReceivers.Add(("Website", new WebsiteVotingReceiver(config, chaosPipe)));
+            }
 
             foreach (var votingReceiver in votingReceivers)
             {

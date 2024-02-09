@@ -178,22 +178,30 @@ namespace TwitchChatVotingProxy.VotingReceiver
         /// </summary>
         public async Task OnSlashCommandExecuted(SocketSlashCommand command)
         {
-            string option = ((string)command.Data.Options.FirstOrDefault()).Trim();
-
-            if (string.IsNullOrEmpty(option))
+            try
             {
-                await command.RespondAsync("Missing option", ephemeral: true);
-                return;
+                string option = ((string)command.Data.Options.FirstOrDefault()).Trim();
+                m_Logger.Information($" received {option}");
+
+                if (string.IsNullOrEmpty(option))
+                {
+                    await command.RespondAsync("Missing option", ephemeral: true);
+                    return;
+                }
+
+                await command.RespondAsync($"Voted for {option}", ephemeral: true);
+                m_Logger.Information($" running message receive");
+                OnMessage?.Invoke(this, new OnMessageArgs()
+                {
+                    Message = option,
+                    ClientId = $"{command.User.Id}",
+                    Username = command.User.GlobalName
+                });
+                m_Logger.Information($" ending message receive");
+            } catch(Exception ex)
+            {
+                m_Logger.Error(ex, "Error executing slash command");
             }
-
-            await command.RespondAsync($"Voted for {option}", ephemeral: true);
-
-            OnMessage?.Invoke(this, new OnMessageArgs()
-            {
-                Message = option,
-                ClientId = $"{command.User.Id}",
-                Username = command.User.GlobalName
-            });
         }
     }
 }
